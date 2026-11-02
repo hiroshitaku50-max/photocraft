@@ -1,3 +1,15 @@
+Nousara Image
+Copyright (c) 2026 Nousara Image.
+
+Nousara Image is a modified version of PhotoCraft (https://github.com/storytold/photocraft),
+Copyright (c) 2026 ArtCraft Team and the PhotoCraft contributors, used under the MIT License or
+the Apache License, Version 2.0 (LICENSE-MIT, LICENSE-APACHE). Changes from PhotoCraft: the
+product name shown to users, the app icon (assets/app-icon/), the Windows installer, the About
+dialog and Help links, and the upstream release check, which is turned off. Nousara Image is not
+made or endorsed by the ArtCraft Team. PhotoCraft's original notice follows.
+
+----------------------------------------------------------------------------------------------------
+
 PhotoCraft
 Copyright (c) 2026 ArtCraft Team and the PhotoCraft contributors.
 Licensed under the MIT License or the Apache License, Version 2.0, at your option

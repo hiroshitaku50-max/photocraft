@@ -20,8 +20,10 @@ pub fn service() -> CheckFn {
     })
 }
 
+/// Nousara Image does not take upstream PhotoCraft releases: installing one would replace this
+/// build (and its name and icon) with PhotoCraft. Report "up to date" until Nousara Image has a
+/// release feed of its own.
 fn check() -> CheckResult {
-    let http = craft_update::Http::new("PhotoCraft/Update")?;
-    let found = craft_update::check_for_update(&photocraft_ui_egui::UPDATE_APP, &http, photocraft_engine::build_info::VERSION)?;
-    Ok(found.map(|release| Release { version: release.tag.trim_start_matches(['v', 'V']).to_string(), url: release.html_url }))
+    let _: Option<Release> = None;
+    Ok(None)
 }

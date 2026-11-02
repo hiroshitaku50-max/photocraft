@@ -298,7 +298,7 @@ pub struct Interface {
     /// #1271, #1316). Read when the app starts. macOS always uses the system's.
     pub system_title_bar: bool,
     /// Show the active document's file name in the title bar and the OS window title. The tabs
-    /// already name the file, so this can be turned off for a plain "PhotoCraft" title (#5037).
+    /// already name the file, so this can be turned off for a plain "Nousara Image" title (#5037).
     /// The unsaved-changes mark stays either way.
     pub show_file_name_in_title: bool,
     /// Notices (the lower-right cards) hide themselves after
