@@ -32,10 +32,20 @@ mod descriptors;
 mod events;
 mod fields;
 mod files;
+
+mod steps_channels;
+mod steps_distort;
 mod steps_doc;
+mod steps_gallery;
 mod steps_image;
 mod steps_layer;
 mod steps_make;
+
+mod steps_stylize;
+
+mod steps_other;
+mod steps_render;
+mod steps_selection;
 mod tables;
 
 #[cfg(test)]
@@ -56,6 +66,7 @@ use fields::Mapped;
 use files::{load, save};
 #[cfg(test)]
 use steps_doc::crop_from;
+pub(crate) use steps_gallery::RECORDED_EVENT;
 #[cfg(test)]
 use steps_image::{apply_image_from, transform_to};
 #[cfg(test)]
@@ -70,7 +81,7 @@ pub const PHOTOSHOP_STEP: &str = "actions.photoshopStep";
 /// Photoshop's Insert Stop: `{"message", "allowContinue"}`.
 pub const STOP_MESSAGE: &str = "actions.stopMessage";
 /// The set name Save Actions uses for actions that came from no set.
-pub const DEFAULT_SET: &str = "PhotoCraft Actions";
+pub const DEFAULT_SET: &str = "Nousara Image Actions";
 
 fn bad(cmd: &str, msg: impl Into<String>) -> EngineError {
     EngineError::BadParams { cmd: cmd.into(), msg: msg.into() }
@@ -92,7 +103,7 @@ fn stop_message(_: &mut Session, p: &Value) -> Result<Value> {
 fn photoshop_step_run(_: &mut Session, p: &Value) -> Result<Value> {
     let name = jstr(p, "name").filter(|n| !n.is_empty()).unwrap_or("this step");
     let event = jstr(p, "event").unwrap_or("?");
-    Err(EngineError::Other(format!("Photoshop step \"{name}\" ({event}) has no PhotoCraft equivalent yet; switch it off in the Actions panel to skip it")))
+    Err(EngineError::Other(format!("Photoshop step \"{name}\" ({event}) has no Nousara Image equivalent yet; switch it off in the Actions panel to skip it")))
 }
 
 pub fn specs() -> Vec<CommandSpec> {
@@ -102,7 +113,7 @@ pub fn specs() -> Vec<CommandSpec> {
             label: "Load Actions…",
             menu: &[],
             shortcut: None,
-            params: r##"{"path":".atn file"?,"data":base64 bytes?,"set":name? (override the file's set name),"replace":bool=true (replace the actions of a set of the same name),"encoding":"auto"|label="auto" (the encoding of 8-bit step names: shift_jis, gbk, big5, euc-kr, windows-1252, macintosh…; auto works it out)} → {set, actions:[names], steps, unsupported:[{action, step, event, name}], functionKeys:[{action, key}], warnings, encoding}. Photoshop steps PhotoCraft cannot play become actions.photoshopStep steps (kept for Save Actions; they fail at playback with the step's name); tool selections and other steps with no document effect are imported switched off. Layer references by name replay in any document."##,
+            params: r##"{"path":".atn file"?,"data":base64 bytes?,"set":name? (override the file's set name),"replace":bool=true (replace the actions of a set of the same name),"encoding":"auto"|label="auto" (the encoding of 8-bit step names: shift_jis, gbk, big5, euc-kr, windows-1252, macintosh…; auto works it out)} → {set, actions:[names], steps, unsupported:[{action, step, event, name}], functionKeys:[{action, key}], warnings, encoding}. Photoshop steps Nousara Image cannot play become actions.photoshopStep steps (kept for Save Actions; they fail at playback with the step's name); tool selections and other steps with no document effect are imported switched off. Layer references by name replay in any document."##,
             enabled: always,
             run: load,
             journal: false,
@@ -132,7 +143,7 @@ pub fn specs() -> Vec<CommandSpec> {
             label: "Photoshop Step",
             menu: &[],
             shortcut: None,
-            params: r##"{"event":id,"name":str,"descriptor":base64?} (a step from a .atn file PhotoCraft has no command for: fails at playback, written back by actions.save)"##,
+            params: r##"{"event":id,"name":str,"descriptor":base64?} (a step from a .atn file Nousara Image has no command for: fails at playback, written back by actions.save)"##,
             enabled: always,
             run: photoshop_step_run,
             journal: true,
@@ -145,3 +156,12 @@ mod tests;
 
 #[cfg(test)]
 mod layer_props_tests;
+
+#[cfg(test)]
+mod stylize_tests;
+
+#[cfg(test)]
+mod selection_tests;
+
+#[cfg(test)]
+mod render_tests;
