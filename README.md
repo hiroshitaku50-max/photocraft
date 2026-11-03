@@ -23,7 +23,7 @@ not code-signed yet, so Windows SmartScreen asks first: choose **More info**, th
 ```sh
 sudo apt-get install mingw-w64 nsis
 rustup target add x86_64-pc-windows-gnu
-packaging/nousara/build-windows.sh   # writes dist/Nousara-Image-Setup-<version>.exe
+CRAFT_FONTS_DIR=../craft-fonts packaging/nousara/build-windows.sh   # writes dist/Nousara-Image-Setup-<version>.exe
 ```
 
 ## License
